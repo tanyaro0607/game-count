@@ -4,9 +4,12 @@ const $time = document.querySelector('#time') //счетчик времени
 const $result= document.querySelector('#result') //счетчик результата
 const $timeHeader = document.querySelector('#time-header') //заголовок Время игры
 const $resultHeader = document.querySelector('#result-header') //заголвоок Ваш результат
+const $gameTime = document.querySelector('#game-time') //поле ввода времени игры
+
 
 $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
+$gameTime.addEventListener('input', setGameTime)
 
 let score = 0
 let isGameStarted = false
@@ -15,6 +18,7 @@ let isGameStarted = false
 function startGame() {
     score = 0 //обнуляем счет
     setGameTime()
+    $gameTime.setAttribute('disabled', 'true') //блокируем поле для воода времени на врнмя игры
     $timeHeader.classList.remove('hide') //показать заголовк Время игры
     $resultHeader.classList.add('hide') //скрыть заголовок Ваш результат
     isGameStarted = true
@@ -41,13 +45,14 @@ function setGameScore() {
 
 //заданное время игры
 function setGameTime() {
-    let time = 5
-    $time.textContent = time
+    let time = +$gameTime.value //забираем введенное значение и приводим к числу (ч/з +)
+    $time.textContent = time.toFixed(1)
 }
 
 function endGame() {
     isGameStarted = false
     setGameScore()
+    $gameTime.removeAttribute('disabled') //удаляем атрибут для блокировки поля ввода
     $start.classList.remove('hide') //показать кнопку
     $game.innerHTML = '' //очистить поле от квадратов
     $game.style.backgroundColor = '#ccc' //замена цвета
