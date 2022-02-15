@@ -1,6 +1,9 @@
 const $start = document.querySelector('#start') //кнопка 'начало'
 const $game = document.querySelector('#game') //поле для игры
 const $time = document.querySelector('#time') //счетчик времени
+const $result= document.querySelector('#result') //счетчик результата
+const $timeHeader = document.querySelector('#time-header') //заголовок Время игры
+const $resultHeader = document.querySelector('#result-header') //заголвоок Ваш результат
 
 $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
@@ -10,6 +13,10 @@ let isGameStarted = false
 
 //функция начало игры
 function startGame() {
+    score = 0 //обнуляем счет
+    setGameTime()
+    $timeHeader.classList.remove('hide') //показать заголовк Время игры
+    $resultHeader.classList.add('hide') //скрыть заголовок Ваш результат
     isGameStarted = true
     $game.style.backgroundColor = '#fff' //смена цвета на белый
     $start.classList.add('hide') //скрыть кнопку
@@ -27,8 +34,26 @@ function startGame() {
     renderBox() //создать квадрат
 }
 
+//счетчик результата
+function setGameScore() {
+    $result.textContent = score.toString()
+}
+
+//заданное время игры
+function setGameTime() {
+    let time = 5
+    $time.textContent = time
+}
+
 function endGame() {
     isGameStarted = false
+    setGameScore()
+    $start.classList.remove('hide') //показать кнопку
+    $game.innerHTML = '' //очистить поле от квадратов
+    $game.style.backgroundColor = '#ccc' //замена цвета
+    $timeHeader.classList.add('hide') //скрыть заголовк Время игры
+    $resultHeader.classList.remove('hide') //показать заголовок Ваш результат
+    
 }
 
 function handleBoxClick(event){
