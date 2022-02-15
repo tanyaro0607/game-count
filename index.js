@@ -26,16 +26,24 @@ function handleBoxClick(event){
 function renderBox() { 
     $game.innerHTML = '' //очистить поле
     let box = document.createElement('div') //сгененировать div
+    let boxSize = getRandom(30, 100)
+    let gameSize = $game.getBoundingClientRect() //величина поля
+    let maxTop = gameSize.height - boxSize
+    let maxLeft = gameSize.width - boxSize
 
     //добавляем стили и атрибуды для квадрата
-    box.style.height = box.style.width = '50px' 
+    box.style.height = box.style.width = boxSize + 'px' 
     box.style.position = 'absolute' 
     box.style.backgroundColor = '#000'
-    box.style.top = '50px'
-    box.style.left = '70px'
+    box.style.top = getRandom(0, maxTop) + 'px'
+    box.style.left = getRandom(0, maxLeft) +'px'
     box.style.cursor = 'pointer'
     box.setAttribute('data-box', 'true')
  
     $game.insertAdjacentElement('afterbegin', box) //добавление элемента в dom-дерево
+}
+
+function getRandom(min, max) {
+    return Math.floor(Math.random() *(max - min) + min)
 }
 
