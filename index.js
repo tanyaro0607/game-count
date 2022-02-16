@@ -11,6 +11,17 @@ $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
 $gameTime.addEventListener('input', setGameTime)
 
+//ф-я: показать элементы
+function show($el) {
+    $el.classList.remove('hide')
+}
+
+//ф-я: скрыть элементы
+function hide($el) {
+    $el.classList.add('hide')
+
+}
+
 let score = 0
 let isGameStarted = false
 
@@ -19,11 +30,11 @@ function startGame() {
     score = 0 //обнуляем счет
     setGameTime()
     $gameTime.setAttribute('disabled', 'true') //блокируем поле для воода времени на врнмя игры
-    $timeHeader.classList.remove('hide') //показать заголовк Время игры
-    $resultHeader.classList.add('hide') //скрыть заголовок Ваш результат
+    show($timeHeader) //показать заголовк Время игры
+    hide($resultHeader) //скрыть заголовок Ваш результат
     isGameStarted = true
     $game.style.backgroundColor = '#fff' //смена цвета на белый
-    $start.classList.add('hide') //скрыть кнопку
+    hide($start) //скрыть кнопку
 
     let interval = setInterval(function() {
         let time = parseFloat($time.textContent)
@@ -53,11 +64,11 @@ function endGame() {
     isGameStarted = false
     setGameScore()
     $gameTime.removeAttribute('disabled') //удаляем атрибут для блокировки поля ввода
-    $start.classList.remove('hide') //показать кнопку
+    show($start) //показать кнопку
     $game.innerHTML = '' //очистить поле от квадратов
     $game.style.backgroundColor = '#ccc' //замена цвета
-    $timeHeader.classList.add('hide') //скрыть заголовк Время игры
-    $resultHeader.classList.remove('hide') //показать заголовок Ваш результат
+    hide($timeHeader) //скрыть заголовк Время игры
+    show($resultHeader) //показать заголовок Ваш результат
     
 }
 
