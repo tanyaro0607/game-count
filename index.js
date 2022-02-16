@@ -5,7 +5,7 @@ const $result= document.querySelector('#result') //счетчик результ
 const $timeHeader = document.querySelector('#time-header') //заголовок Время игры
 const $resultHeader = document.querySelector('#result-header') //заголвоок Ваш результат
 const $gameTime = document.querySelector('#game-time') //поле ввода времени игры
-
+const colors = ['#62B1D0', '#FF7373', '#61D7A4', '#9370DB', '#FF69B4', '#90EE90', '#FFFB73']
 
 $start.addEventListener('click', startGame)
 $game.addEventListener('click', handleBoxClick)
@@ -19,7 +19,6 @@ function show($el) {
 //ф-я: скрыть элементы
 function hide($el) {
     $el.classList.add('hide')
-
 }
 
 let score = 0
@@ -30,8 +29,6 @@ function startGame() {
     score = 0 //обнуляем счет
     setGameTime()
     $gameTime.setAttribute('disabled', 'true') //блокируем поле для воода времени на врнмя игры
-    show($timeHeader) //показать заголовк Время игры
-    hide($resultHeader) //скрыть заголовок Ваш результат
     isGameStarted = true
     $game.style.backgroundColor = '#fff' //смена цвета на белый
     hide($start) //скрыть кнопку
@@ -58,6 +55,8 @@ function setGameScore() {
 function setGameTime() {
     let time = +$gameTime.value //забираем введенное значение и приводим к числу (ч/з +)
     $time.textContent = time.toFixed(1)
+    show($timeHeader) //показать заголовк Время игры
+    hide($resultHeader) //скрыть заголовок Ваш результат
 }
 
 function endGame() {
@@ -92,11 +91,12 @@ function renderBox() {
     let gameSize = $game.getBoundingClientRect() //величина поля
     let maxTop = gameSize.height - boxSize
     let maxLeft = gameSize.width - boxSize
+    let randomColorIndex = getRandom(0, colors.length)
 
     //добавляем стили и атрибуды для квадрата
     box.style.height = box.style.width = boxSize + 'px' 
     box.style.position = 'absolute' 
-    box.style.backgroundColor = '#000'
+    box.style.backgroundColor = colors[randomColorIndex]
     box.style.top = getRandom(0, maxTop) + 'px'
     box.style.left = getRandom(0, maxLeft) +'px'
     box.style.cursor = 'pointer'
@@ -107,6 +107,6 @@ function renderBox() {
 
 //ф-я для генерации рандомного числа
 function getRandom(min, max) {
-    return Math.floor(Math.random() *(max - min) + min)
+    return Math.floor(Math.random() * (max - min) + min)
 }
 
